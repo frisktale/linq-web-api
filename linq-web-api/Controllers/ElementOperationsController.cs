@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class ElementOperationsController : ControllerBase
     {
+        private readonly ILogger<ElementOperationsController> logger;
+
+        public ElementOperationsController(ILogger<ElementOperationsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -25,7 +32,7 @@ namespace linq_web_api.Controllers
                                  select p)
                                  .First();
 
-            Console.WriteLine(product12);
+            logger.LogInformation(product12.ToString());
             #endregion
             return 0;
         }
@@ -37,7 +44,7 @@ namespace linq_web_api.Controllers
 
             string startsWithO = strings.First(s => s[0] == 'o');
 
-            Console.WriteLine($"A string starting with 'o': {startsWithO}");
+            logger.LogInformation($"A string starting with 'o': {startsWithO}");
             #endregion
             return 0;
         }
@@ -49,7 +56,7 @@ namespace linq_web_api.Controllers
 
             int firstNumOrDefault = numbers.FirstOrDefault();
 
-            Console.WriteLine(firstNumOrDefault);
+            logger.LogInformation(firstNumOrDefault.ToString());
             #endregion
             return 0;
         }
@@ -61,7 +68,7 @@ namespace linq_web_api.Controllers
 
             Product product789 = products.FirstOrDefault(p => p.ProductID == 789);
 
-            Console.WriteLine($"Product 789 exists: {product789 != null}");
+            logger.LogInformation($"Product 789 exists: {product789 != null}");
             #endregion
             return 0;
         }
@@ -77,7 +84,7 @@ namespace linq_web_api.Controllers
                 select n)
                 .ElementAt(1);  // second number is index 1 because sequences use 0-based indexing
 
-            Console.WriteLine($"Second number > 5: {fourthLowNum}");
+            logger.LogInformation($"Second number > 5: {fourthLowNum}");
             #endregion
             return 0;
         }

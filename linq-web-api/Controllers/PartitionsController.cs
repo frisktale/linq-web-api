@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class PartitionsController : ControllerBase
     {
+        private readonly ILogger<PartitionsController> logger;
+
+        public PartitionsController(ILogger<PartitionsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -22,10 +29,10 @@ namespace linq_web_api.Controllers
 
             var first3Numbers = numbers.Take(3);
 
-            Console.WriteLine("First 3 numbers:");
+            logger.LogInformation("First 3 numbers:");
             foreach (var n in first3Numbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -43,10 +50,10 @@ namespace linq_web_api.Controllers
                 select (cust.CustomerID, order.OrderID, order.OrderDate))
                 .Take(3);
 
-            Console.WriteLine("First 3 orders in WA:");
+            logger.LogInformation("First 3 orders in WA:");
             foreach (var order in first3WAOrders)
             {
-                Console.WriteLine(order);
+                logger.LogInformation(order.ToString());
             }
             #endregion
             return 0;
@@ -61,10 +68,10 @@ namespace linq_web_api.Controllers
 
             var allButFirst4Numbers = numbers.Skip(4);
 
-            Console.WriteLine("All but first 4 numbers:");
+            logger.LogInformation("All but first 4 numbers:");
             foreach (var n in allButFirst4Numbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -82,10 +89,10 @@ namespace linq_web_api.Controllers
 
             var allButFirst2Orders = waOrders.Skip(2);
 
-            Console.WriteLine("All but first 2 orders in WA:");
+            logger.LogInformation("All but first 2 orders in WA:");
             foreach (var order in allButFirst2Orders)
             {
-                Console.WriteLine(order);
+                logger.LogInformation(order.ToString());
             }
             #endregion
             return 1;
@@ -98,10 +105,10 @@ namespace linq_web_api.Controllers
 
             var firstNumbersLessThan6 = numbers.TakeWhile(n => n < 6);
 
-            Console.WriteLine("First numbers less than 6:");
+            logger.LogInformation("First numbers less than 6:");
             foreach (var num in firstNumbersLessThan6)
             {
-                Console.WriteLine(num);
+                logger.LogInformation(num.ToString());
             }
             #endregion
             return 0;
@@ -114,10 +121,10 @@ namespace linq_web_api.Controllers
 
             var firstSmallNumbers = numbers.TakeWhile((n, index) => n >= index);
 
-            Console.WriteLine("First numbers not less than their position:");
+            logger.LogInformation("First numbers not less than their position:");
             foreach (var n in firstSmallNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -133,10 +140,10 @@ namespace linq_web_api.Controllers
             // of type int because numbers is an int array.
             var allButFirst3Numbers = numbers.SkipWhile(n => n % 3 != 0);
 
-            Console.WriteLine("All elements starting from first element divisible by 3:");
+            logger.LogInformation("All elements starting from first element divisible by 3:");
             foreach (var n in allButFirst3Numbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -149,10 +156,10 @@ namespace linq_web_api.Controllers
 
             var laterNumbers = numbers.SkipWhile((n, index) => n >= index);
 
-            Console.WriteLine("All elements starting from first element less than its position:");
+            logger.LogInformation("All elements starting from first element less than its position:");
             foreach (var n in laterNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;

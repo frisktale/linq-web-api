@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class GroupingsController : ControllerBase
     {
+        private readonly ILogger<GroupingsController> logger;
+
+        public GroupingsController(ILogger<GroupingsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -27,10 +34,10 @@ namespace linq_web_api.Controllers
 
             foreach (var g in numberGroups)
             {
-                Console.WriteLine($"Numbers with a remainder of {g.Remainder} when divided by 5:");
+                logger.LogInformation($"Numbers with a remainder of {g.Remainder} when divided by 5:");
                 foreach (var n in g.Numbers)
                 {
-                    Console.WriteLine(n);
+                    logger.LogInformation(n.ToString());
                 }
             }
             #endregion
@@ -48,10 +55,10 @@ namespace linq_web_api.Controllers
 
             foreach (var g in wordGroups)
             {
-                Console.WriteLine("Words that start with the letter '{0}':", g.FirstLetter);
+                logger.LogInformation("Words that start with the letter '{0}':", g.FirstLetter);
                 foreach (var w in g.Words)
                 {
-                    Console.WriteLine(w);
+                    logger.LogInformation(w);
                 }
             }
             #endregion
@@ -69,10 +76,10 @@ namespace linq_web_api.Controllers
 
             foreach (var orderGroup in orderGroups)
             {
-                Console.WriteLine($"Products in {orderGroup.Category} category:");
+                logger.LogInformation($"Products in {orderGroup.Category} category:");
                 foreach (var product in orderGroup.Products)
                 {
-                    Console.WriteLine($"\t{product}");
+                    logger.LogInformation($"\t{product}");
                 }
             }
             #endregion
@@ -101,16 +108,16 @@ namespace linq_web_api.Controllers
 
             foreach (var ordersByCustomer in customerOrderGroups)
             {
-                Console.WriteLine($"Customer Name: {ordersByCustomer.CompanyName}");
+                logger.LogInformation($"Customer Name: {ordersByCustomer.CompanyName}");
                 foreach (var ordersByYear in ordersByCustomer.YearGroups)
                 {
-                    Console.WriteLine($"\tYear: {ordersByYear.Year}");
+                    logger.LogInformation($"\tYear: {ordersByYear.Year}");
                     foreach (var ordersByMonth in ordersByYear.MonthGroups)
                     {
-                        Console.WriteLine($"\t\tMonth: {ordersByMonth.Month}");
+                        logger.LogInformation($"\t\tMonth: {ordersByMonth.Month}");
                         foreach (var order in ordersByMonth.Orders)
                         {
-                            Console.WriteLine($"\t\t\tOrder: {order}");
+                            logger.LogInformation($"\t\t\tOrder: {order}");
                         }
                     }
                 }
@@ -131,9 +138,9 @@ namespace linq_web_api.Controllers
                 // The key would be the first item in the set
                 foreach (var word in set)
                 {
-                    Console.WriteLine(word);
+                    logger.LogInformation(word);
                 }
-                Console.WriteLine("...");
+                logger.LogInformation("...");
             }
             #endregion
             return 0;
@@ -151,10 +158,10 @@ namespace linq_web_api.Controllers
                         );
             foreach (var set in orderGroups)
             {
-                Console.WriteLine(set.Key);
+                logger.LogInformation(set.Key);
                 foreach (var word in set)
                 {
-                    Console.WriteLine($"\t{word}");
+                    logger.LogInformation($"\t{word}");
                 }
             }
 

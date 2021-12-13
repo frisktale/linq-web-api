@@ -8,6 +8,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class QueryExecutionController : ControllerBase
     {
+        private readonly ILogger<QueryExecutionController> logger;
+
+        public QueryExecutionController(ILogger<QueryExecutionController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public int DeferredExecution()
         {
@@ -25,7 +32,7 @@ namespace linq_web_api.Controllers
             // until each element is evaluated (as a side-effect):
             foreach (var v in q)
             {
-                Console.WriteLine($"v = {v}, i = {i}");
+                logger.LogInformation($"v = {v}, i = {i}");
             }
             #endregion
             return 0;
@@ -48,7 +55,7 @@ namespace linq_web_api.Controllers
             // incremented before we iterate the results:
             foreach (var v in q)
             {
-                Console.WriteLine($"v = {v}, i = {i}");
+                logger.LogInformation($"v = {v}, i = {i}");
             }
             #endregion
             return 0;
@@ -65,10 +72,10 @@ namespace linq_web_api.Controllers
                              where n <= 3
                              select n;
 
-            Console.WriteLine("First run numbers <= 3:");
+            logger.LogInformation("First run numbers <= 3:");
             foreach (int n in lowNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
 
             for (int i = 0; i < 10; i++)
@@ -79,10 +86,10 @@ namespace linq_web_api.Controllers
             // During this second run, the same query object,
             // lowNumbers, will be iterating over the new state
             // of numbers[], producing different results:
-            Console.WriteLine("Second run numbers <= 3:");
+            logger.LogInformation("Second run numbers <= 3:");
             foreach (int n in lowNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;

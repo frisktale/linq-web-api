@@ -10,10 +10,20 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class AggregateOperatorsController : ControllerBase
     {
+        private readonly ILogger<AggregateOperatorsController> logger;
+
+        public AggregateOperatorsController(ILogger<AggregateOperatorsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
         public List<Customer> GetCustomerList() => Customers.CustomerList;
+
+
+
         [HttpGet]
         public int CountSyntax()
         {
@@ -22,7 +32,7 @@ namespace linq_web_api.Controllers
 
             int uniqueFactors = factorsOf300.Distinct().Count();
 
-            Console.WriteLine($"There are {uniqueFactors} unique factors of 300.");
+            logger.LogInformation($"There are {uniqueFactors} unique factors of 300.");
             #endregion
             return 0;
         }
@@ -34,7 +44,7 @@ namespace linq_web_api.Controllers
 
             int oddNumbers = numbers.Count(n => n % 2 == 1);
 
-            Console.WriteLine("There are {0} odd numbers in the list.", oddNumbers);
+            logger.LogInformation("There are {0} odd numbers in the list.", oddNumbers);
             #endregion
             return 0;
         }
@@ -49,7 +59,7 @@ namespace linq_web_api.Controllers
 
             foreach (var customer in orderCounts)
             {
-                Console.WriteLine($"ID: {customer.CustomerID}, count: {customer.OrderCount}");
+                logger.LogInformation($"ID: {customer.CustomerID}, count: {customer.OrderCount}");
             }
 
             #endregion
@@ -67,7 +77,7 @@ namespace linq_web_api.Controllers
 
             foreach (var c in categoryCounts)
             {
-                Console.WriteLine($"Category: {c.Category}: Product count: {c.ProductCount}");
+                logger.LogInformation($"Category: {c.Category}: Product count: {c.ProductCount}");
             }
             #endregion
             return 0;
@@ -80,7 +90,7 @@ namespace linq_web_api.Controllers
 
             double numSum = numbers.Sum();
 
-            Console.WriteLine($"The sum of the numbers is {numSum}");
+            logger.LogInformation($"The sum of the numbers is {numSum}");
             #endregion
             return 0;
         }
@@ -92,7 +102,7 @@ namespace linq_web_api.Controllers
 
             double totalChars = words.Sum(w => w.Length);
 
-            Console.WriteLine($"There are a total of {totalChars} characters in these words.");
+            logger.LogInformation($"There are a total of {totalChars} characters in these words.");
             #endregion
             return 0;
         }
@@ -108,7 +118,7 @@ namespace linq_web_api.Controllers
 
             foreach (var pair in categories)
             {
-                Console.WriteLine($"Category: {pair.Category}, Units in stock: {pair.TotalUnitsInStock}");
+                logger.LogInformation($"Category: {pair.Category}, Units in stock: {pair.TotalUnitsInStock}");
             }
             #endregion
             return 0;
@@ -121,7 +131,7 @@ namespace linq_web_api.Controllers
 
             int minNum = numbers.Min();
 
-            Console.WriteLine($"The minimum number is {minNum}");
+            logger.LogInformation($"The minimum number is {minNum}");
             #endregion
             return 0;
         }
@@ -133,7 +143,7 @@ namespace linq_web_api.Controllers
 
             int shortestWord = words.Min(w => w.Length);
 
-            Console.WriteLine($"The shortest word is {shortestWord} characters long.");
+            logger.LogInformation($"The shortest word is {shortestWord} characters long.");
             #endregion
             return 0;
         }
@@ -149,7 +159,7 @@ namespace linq_web_api.Controllers
 
             foreach (var c in categories)
             {
-                Console.WriteLine($"Category: {c.Category}, Lowest price: {c.CheapestPrice}");
+                logger.LogInformation($"Category: {c.Category}, Lowest price: {c.CheapestPrice}");
             }
             #endregion
             return 0;
@@ -167,10 +177,10 @@ namespace linq_web_api.Controllers
 
             foreach (var c in categories)
             {
-                Console.WriteLine($"Category: {c.Category}");
+                logger.LogInformation($"Category: {c.Category}");
                 foreach (var p in c.CheapestProducts)
                 {
-                    Console.WriteLine($"\tProduct: {p}");
+                    logger.LogInformation($"\tProduct: {p}");
                 }
             }
             #endregion
@@ -184,7 +194,7 @@ namespace linq_web_api.Controllers
 
             int maxNum = numbers.Max();
 
-            Console.WriteLine($"The maximum number is {maxNum}");
+            logger.LogInformation($"The maximum number is {maxNum}");
             #endregion
             return 0;
         }
@@ -196,7 +206,7 @@ namespace linq_web_api.Controllers
 
             int longestLength = words.Max(w => w.Length);
 
-            Console.WriteLine($"The longest word is {longestLength} characters long.");
+            logger.LogInformation($"The longest word is {longestLength} characters long.");
             #endregion
             return 0;
         }
@@ -212,7 +222,7 @@ namespace linq_web_api.Controllers
 
             foreach (var c in categories)
             {
-                Console.WriteLine($"Category: {c.Category} Most expensive product: {c.MostExpensivePrice}");
+                logger.LogInformation($"Category: {c.Category} Most expensive product: {c.MostExpensivePrice}");
             }
             #endregion
             return 0;
@@ -230,10 +240,10 @@ namespace linq_web_api.Controllers
 
             foreach (var c in categories)
             {
-                Console.WriteLine($"Category: {c.Category}");
+                logger.LogInformation($"Category: {c.Category}");
                 foreach (var p in c.MostExpensiveProducts)
                 {
-                    Console.WriteLine($"\t{p}");
+                    logger.LogInformation($"\t{p}");
                 }
             }
             #endregion
@@ -247,7 +257,7 @@ namespace linq_web_api.Controllers
 
             double averageNum = numbers.Average();
 
-            Console.WriteLine($"The average number is {averageNum}.");
+            logger.LogInformation($"The average number is {averageNum}.");
             #endregion
             return 0;
         }
@@ -259,7 +269,7 @@ namespace linq_web_api.Controllers
 
             double averageLength = words.Average(w => w.Length);
 
-            Console.WriteLine($"The average word length is {averageLength} characters.");
+            logger.LogInformation($"The average word length is {averageLength} characters.");
             #endregion
             return 0;
         }
@@ -275,7 +285,7 @@ namespace linq_web_api.Controllers
 
             foreach (var c in categories)
             {
-                Console.WriteLine($"Category: {c.Category}, Average price: {c.AveragePrice}");
+                logger.LogInformation($"Category: {c.Category}, Average price: {c.AveragePrice}");
             }
             #endregion
             return 0;
@@ -288,7 +298,7 @@ namespace linq_web_api.Controllers
 
             double product = doubles.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor);
 
-            Console.WriteLine($"Total product of all numbers: {product}");
+            logger.LogInformation($"Total product of all numbers: {product}");
             #endregion
             return 0;
         }
@@ -305,7 +315,7 @@ namespace linq_web_api.Controllers
                     (balance, nextWithdrawal) =>
                         nextWithdrawal <= balance ? balance - nextWithdrawal : balance);
 
-            Console.WriteLine($"Ending balance: {endBalance}");
+            logger.LogInformation($"Ending balance: {endBalance}");
             #endregion
             return 0;
         }

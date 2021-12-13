@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class SequenceOperationsController : ControllerBase
     {
+        private readonly ILogger<SequenceOperationsController> logger;
+
+        public SequenceOperationsController(ILogger<SequenceOperationsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -23,7 +30,7 @@ namespace linq_web_api.Controllers
 
             bool match = wordsA.SequenceEqual(wordsB);
 
-            Console.WriteLine($"The sequences match: {match}");
+            logger.LogInformation($"The sequences match: {match}");
             #endregion
             return 0;
         }
@@ -37,7 +44,7 @@ namespace linq_web_api.Controllers
 
             bool match = wordsA.SequenceEqual(wordsB);
 
-            Console.WriteLine($"The sequences match: {match}");
+            logger.LogInformation($"The sequences match: {match}");
             #endregion
             return 0;
         }
@@ -50,10 +57,10 @@ namespace linq_web_api.Controllers
 
             var allNumbers = numbersA.Concat(numbersB);
 
-            Console.WriteLine("All numbers from both arrays:");
+            logger.LogInformation("All numbers from both arrays:");
             foreach (var n in allNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -72,10 +79,10 @@ namespace linq_web_api.Controllers
 
             var allNames = customerNames.Concat(productNames);
 
-            Console.WriteLine("Customer and product names:");
+            logger.LogInformation("Customer and product names:");
             foreach (var n in allNames)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n);
             }
             #endregion
             return 0;
@@ -89,7 +96,7 @@ namespace linq_web_api.Controllers
 
             int dotProduct = vectorA.Zip(vectorB, (a, b) => a * b).Sum();
 
-            Console.WriteLine($"Dot product: {dotProduct}");
+            logger.LogInformation($"Dot product: {dotProduct}");
             #endregion
             return 0;
         }

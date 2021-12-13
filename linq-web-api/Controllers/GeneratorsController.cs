@@ -8,6 +8,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class GeneratorsController : ControllerBase
     {
+        private readonly ILogger<GeneratorsController> logger;
+
+        public GeneratorsController(ILogger<GeneratorsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public int RangeOfIntegers()
         {
@@ -17,7 +24,7 @@ namespace linq_web_api.Controllers
 
             foreach (var n in numbers)
             {
-                Console.WriteLine("The number {0} is {1}.", n.Number, n.OddEven);
+                logger.LogInformation("The number {0} is {1}.", n.Number, n.OddEven);
             }
             #endregion
             return 0;
@@ -30,7 +37,7 @@ namespace linq_web_api.Controllers
 
             foreach (var n in numbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;

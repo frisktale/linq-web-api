@@ -11,6 +11,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class QuantifiersController : ControllerBase
     {
+        private readonly ILogger<QuantifiersController> logger;
+
+        public QuantifiersController(ILogger<QuantifiersController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -23,7 +30,7 @@ namespace linq_web_api.Controllers
 
             bool iAfterE = words.Any(w => w.Contains("ei"));
 
-            Console.WriteLine($"There is a word that contains in the list that contains 'ei': {iAfterE}");
+            logger.LogInformation($"There is a word that contains in the list that contains 'ei': {iAfterE}");
             #endregion
             return 0;
         }
@@ -39,10 +46,10 @@ namespace linq_web_api.Controllers
 
             foreach (var group in productGroups)
             {
-                Console.WriteLine(group.Category);
+                logger.LogInformation(group.Category);
                 foreach (var product in group.Products)
                 {
-                    Console.WriteLine($"\t{product}");
+                    logger.LogInformation($"\t{product}");
                 }
             }
             #endregion
@@ -56,7 +63,7 @@ namespace linq_web_api.Controllers
 
             bool onlyOdd = numbers.All(n => n % 2 == 1);
 
-            Console.WriteLine($"The list contains only odd numbers: {onlyOdd}");
+            logger.LogInformation($"The list contains only odd numbers: {onlyOdd}");
             #endregion
             return 0;
         }
@@ -73,10 +80,10 @@ namespace linq_web_api.Controllers
 
             foreach (var group in productGroups)
             {
-                Console.WriteLine(group.Category);
+                logger.LogInformation(group.Category);
                 foreach (var product in group.Products)
                 {
-                    Console.WriteLine($"\t{product}");
+                    logger.LogInformation($"\t{product}");
                 }
             }
             #endregion

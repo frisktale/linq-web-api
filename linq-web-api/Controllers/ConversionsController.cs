@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
@@ -8,6 +9,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class ConversionsController : ControllerBase
     {
+        private readonly ILogger<ConversionsController> logger;
+
+        public ConversionsController(ILogger<ConversionsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public int ConvertToArray()
         {
@@ -19,10 +27,10 @@ namespace linq_web_api.Controllers
                                 select d;
             var doublesArray = sortedDoubles.ToArray();
 
-            Console.WriteLine("Every other double from highest to lowest:");
+            logger.LogInformation("Every other double from highest to lowest:");
             for (int d = 0; d < doublesArray.Length; d += 2)
             {
-                Console.WriteLine(doublesArray[d]);
+                logger.LogInformation(doublesArray[d].ToString());
             }
             #endregion
             return 0;
@@ -38,10 +46,10 @@ namespace linq_web_api.Controllers
                               select w;
             var wordList = sortedWords.ToList();
 
-            Console.WriteLine("The sorted word list:");
+            logger.LogInformation("The sorted word list:");
             foreach (var w in wordList)
             {
-                Console.WriteLine(w);
+                logger.LogInformation(w);
             }
             #endregion
             return 0;
@@ -57,7 +65,7 @@ namespace linq_web_api.Controllers
 
             var scoreRecordsDict = scoreRecords.ToDictionary(sr => sr.Name);
 
-            Console.WriteLine("Bob's score: {0}", scoreRecordsDict["Bob"]);
+            logger.LogInformation("Bob's score: {0}", scoreRecordsDict["Bob"]);
             #endregion
             return 0;
         }
@@ -69,10 +77,10 @@ namespace linq_web_api.Controllers
 
             var doubles = numbers.OfType<double>();
 
-            Console.WriteLine("Numbers stored as doubles:");
+            logger.LogInformation("Numbers stored as doubles:");
             foreach (var d in doubles)
             {
-                Console.WriteLine(d);
+                logger.LogInformation(d.ToString());
             }
             #endregion
             return 0;

@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class SetOperationsController : ControllerBase
     {
+        private readonly ILogger<SetOperationsController> logger;
+
+        public SetOperationsController(ILogger<SetOperationsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -22,10 +29,10 @@ namespace linq_web_api.Controllers
 
             var uniqueFactors = factorsOf300.Distinct();
 
-            Console.WriteLine("Prime factors of 300:");
+            logger.LogInformation("Prime factors of 300:");
             foreach (var f in uniqueFactors)
             {
-                Console.WriteLine(f);
+                logger.LogInformation(f.ToString());
             }
             #endregion
             return 0;
@@ -40,10 +47,10 @@ namespace linq_web_api.Controllers
                                  select p.Category)
                                  .Distinct();
 
-            Console.WriteLine("Category names:");
+            logger.LogInformation("Category names:");
             foreach (var n in categoryNames)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n);
             }
             #endregion
             return 0;
@@ -57,10 +64,10 @@ namespace linq_web_api.Controllers
 
             var uniqueNumbers = numbersA.Union(numbersB);
 
-            Console.WriteLine("Unique numbers from both arrays:");
+            logger.LogInformation("Unique numbers from both arrays:");
             foreach (var n in uniqueNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -79,10 +86,10 @@ namespace linq_web_api.Controllers
 
             var uniqueFirstChars = productFirstChars.Union(customerFirstChars);
 
-            Console.WriteLine("Unique first letters from Product names and Customer names:");
+            logger.LogInformation("Unique first letters from Product names and Customer names:");
             foreach (var ch in uniqueFirstChars)
             {
-                Console.WriteLine(ch);
+                logger.LogInformation(ch.ToString());
             }
             #endregion
             return 0;
@@ -96,10 +103,10 @@ namespace linq_web_api.Controllers
 
             var commonNumbers = numbersA.Intersect(numbersB);
 
-            Console.WriteLine("Common numbers shared by both arrays:");
+            logger.LogInformation("Common numbers shared by both arrays:");
             foreach (var n in commonNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -118,10 +125,10 @@ namespace linq_web_api.Controllers
 
             var commonFirstChars = productFirstChars.Intersect(customerFirstChars);
 
-            Console.WriteLine("Common first letters from Product names and Customer names:");
+            logger.LogInformation("Common first letters from Product names and Customer names:");
             foreach (var ch in commonFirstChars)
             {
-                Console.WriteLine(ch);
+                logger.LogInformation(ch.ToString());
             }
             #endregion
             return 0;
@@ -135,10 +142,10 @@ namespace linq_web_api.Controllers
 
             IEnumerable<int> aOnlyNumbers = numbersA.Except(numbersB);
 
-            Console.WriteLine("Numbers in first array but not second array:");
+            logger.LogInformation("Numbers in first array but not second array:");
             foreach (var n in aOnlyNumbers)
             {
-                Console.WriteLine(n);
+                logger.LogInformation(n.ToString());
             }
             #endregion
             return 0;
@@ -157,10 +164,10 @@ namespace linq_web_api.Controllers
 
             var productOnlyFirstChars = productFirstChars.Except(customerFirstChars);
 
-            Console.WriteLine("First letters from Product names, but not from Customer names:");
+            logger.LogInformation("First letters from Product names, but not from Customer names:");
             foreach (var ch in productOnlyFirstChars)
             {
-                Console.WriteLine(ch);
+                logger.LogInformation(ch.ToString());
             }
             #endregion
             return 1;

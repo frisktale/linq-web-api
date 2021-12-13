@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class RestrictionsController : ControllerBase
     {
+        private readonly ILogger<RestrictionsController> logger;
+
+        public RestrictionsController(ILogger<RestrictionsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
 
@@ -25,10 +32,10 @@ namespace linq_web_api.Controllers
                           where num < 5
                           select num;
 
-            Console.WriteLine("Numbers < 5:");
+            logger.LogInformation("Numbers < 5:");
             foreach (var x in lowNums)
             {
-                Console.WriteLine(x);
+                logger.LogInformation(x.ToString());
             }
             #endregion
             return 0;
@@ -43,10 +50,10 @@ namespace linq_web_api.Controllers
                                   where prod.UnitsInStock == 0
                                   select prod;
 
-            Console.WriteLine("Sold out products:");
+            logger.LogInformation("Sold out products:");
             foreach (var product in soldOutProducts)
             {
-                Console.WriteLine($"{product.ProductName} is sold out!");
+                logger.LogInformation($"{product.ProductName} is sold out!");
             }
             #endregion
             return 0;
@@ -61,10 +68,10 @@ namespace linq_web_api.Controllers
                                            where prod.UnitsInStock > 0 && prod.UnitPrice > 3.00M
                                            select prod;
 
-            Console.WriteLine("In-stock products that cost more than 3.00:");
+            logger.LogInformation("In-stock products that cost more than 3.00:");
             foreach (var product in expensiveInStockProducts)
             {
-                Console.WriteLine($"{product.ProductName} is in stock and costs more than 3.00.");
+                logger.LogInformation($"{product.ProductName} is in stock and costs more than 3.00.");
             }
             #endregion
             return 0;
@@ -79,13 +86,13 @@ namespace linq_web_api.Controllers
                               where cust.Region == "WA"
                               select cust;
 
-            Console.WriteLine("Customers from Washington and their orders:");
+            logger.LogInformation("Customers from Washington and their orders:");
             foreach (var customer in waCustomers)
             {
-                Console.WriteLine($"Customer {customer.CustomerID}: {customer.CompanyName}");
+                logger.LogInformation($"Customer {customer.CustomerID}: {customer.CompanyName}");
                 foreach (var order in customer.Orders)
                 {
-                    Console.WriteLine($"  Order {order.OrderID}: {order.OrderDate}");
+                    logger.LogInformation($"  Order {order.OrderID}: {order.OrderDate}");
                 }
             }
             #endregion
@@ -99,10 +106,10 @@ namespace linq_web_api.Controllers
 
             var shortDigits = digits.Where((digit, index) => digit.Length < index);
 
-            Console.WriteLine("Short digits:");
+            logger.LogInformation("Short digits:");
             foreach (var d in shortDigits)
             {
-                Console.WriteLine($"The word {d} is shorter than its value.");
+                logger.LogInformation($"The word {d} is shorter than its value.");
             }
             #endregion
             return 0;

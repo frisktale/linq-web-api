@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class JoinOperationsController : ControllerBase
     {
+        private readonly ILogger<JoinOperationsController> logger;
+
+        public JoinOperationsController(ILogger<JoinOperationsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -34,7 +41,7 @@ namespace linq_web_api.Controllers
 
             foreach (var v in q)
             {
-                Console.WriteLine(v.ProductName + ": " + v.Category);
+                logger.LogInformation(v.ProductName + ": " + v.Category);
             }
             #endregion
             return 0;
@@ -59,10 +66,10 @@ namespace linq_web_api.Controllers
 
             foreach (var v in q)
             {
-                Console.WriteLine(v.Category + ":");
+                logger.LogInformation(v.Category + ":");
                 foreach (var p in v.Products)
                 {
-                    Console.WriteLine("   " + p.ProductName);
+                    logger.LogInformation("   " + p.ProductName);
                 }
             }
             #endregion
@@ -89,7 +96,7 @@ namespace linq_web_api.Controllers
 
             foreach (var v in q)
             {
-                Console.WriteLine(v.ProductName + ": " + v.Category);
+                logger.LogInformation(v.ProductName + ": " + v.Category);
             }
             #endregion
             return 0;
@@ -115,7 +122,7 @@ namespace linq_web_api.Controllers
 
             foreach (var v in q)
             {
-                Console.WriteLine($"{v.ProductName}: {v.Category}");
+                logger.LogInformation($"{v.ProductName}: {v.Category}");
             }
             #endregion
             return 0;

@@ -10,6 +10,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class OrderingsController : ControllerBase
     {
+        private readonly ILogger<OrderingsController> logger;
+
+        public OrderingsController(ILogger<OrderingsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -24,10 +31,10 @@ namespace linq_web_api.Controllers
                               orderby word
                               select word;
 
-            Console.WriteLine("The sorted list of words:");
+            logger.LogInformation("The sorted list of words:");
             foreach (var w in sortedWords)
             {
-                Console.WriteLine(w);
+                logger.LogInformation(w);
             }
             #endregion
             return 0;
@@ -42,10 +49,10 @@ namespace linq_web_api.Controllers
                               orderby word.Length
                               select word;
 
-            Console.WriteLine("The sorted list of words (by length):");
+            logger.LogInformation("The sorted list of words (by length):");
             foreach (var w in sortedWords)
             {
-                Console.WriteLine(w);
+                logger.LogInformation(w);
             }
             #endregion
             return 0;
@@ -62,7 +69,7 @@ namespace linq_web_api.Controllers
 
             foreach (var product in sortedProducts)
             {
-                Console.WriteLine(product);
+                logger.LogInformation(product.ToString());
             }
             #endregion
             return 0;
@@ -86,7 +93,7 @@ namespace linq_web_api.Controllers
 
             foreach (var word in sortedWords)
             {
-                Console.WriteLine(word);
+                logger.LogInformation(word);
             }
             #endregion
             return 0;
@@ -101,10 +108,10 @@ namespace linq_web_api.Controllers
                                 orderby d descending
                                 select d;
 
-            Console.WriteLine("The doubles from highest to lowest:");
+            logger.LogInformation("The doubles from highest to lowest:");
             foreach (var d in sortedDoubles)
             {
-                Console.WriteLine(d);
+                logger.LogInformation(d.ToString());
             }
             #endregion
             return 0;
@@ -121,7 +128,7 @@ namespace linq_web_api.Controllers
 
             foreach (var product in sortedProducts)
             {
-                Console.WriteLine(product);
+                logger.LogInformation(product.ToString());
             }
             #endregion
             return 0;
@@ -136,7 +143,7 @@ namespace linq_web_api.Controllers
 
             foreach (var word in sortedWords)
             {
-                Console.WriteLine(word);
+                logger.LogInformation(word);
             }
             #endregion
             return 0;
@@ -151,10 +158,10 @@ namespace linq_web_api.Controllers
                                orderby digit.Length, digit
                                select digit;
 
-            Console.WriteLine("Sorted digits:");
+            logger.LogInformation("Sorted digits:");
             foreach (var d in sortedDigits)
             {
-                Console.WriteLine(d);
+                logger.LogInformation(d);
             }
             #endregion
             return 0;
@@ -171,7 +178,7 @@ namespace linq_web_api.Controllers
 
             foreach (var word in sortedWords)
             {
-                Console.WriteLine(word);
+                logger.LogInformation(word);
             }
             #endregion
             return 0;
@@ -188,7 +195,7 @@ namespace linq_web_api.Controllers
 
             foreach (var product in sortedProducts)
             {
-                Console.WriteLine(product);
+                logger.LogInformation(product.ToString());
             }
             #endregion
             return 0;
@@ -205,7 +212,7 @@ namespace linq_web_api.Controllers
 
             foreach (var word in sortedWords)
             {
-                Console.WriteLine(word);
+                logger.LogInformation(word);
             }
             #endregion
             return 0;
@@ -222,10 +229,10 @@ namespace linq_web_api.Controllers
                 select digit)
                 .Reverse();
 
-            Console.WriteLine("A backwards list of the digits with a second character of 'i':");
+            logger.LogInformation("A backwards list of the digits with a second character of 'i':");
             foreach (var d in reversedIDigits)
             {
-                Console.WriteLine(d);
+                logger.LogInformation(d);
             }
             #endregion
             return 0;

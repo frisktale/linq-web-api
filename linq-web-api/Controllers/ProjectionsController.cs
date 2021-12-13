@@ -11,6 +11,13 @@ namespace linq_web_api.Controllers
     [Route("[controller]/[action]")]
     public class ProjectionsController : ControllerBase
     {
+        private readonly ILogger<ProjectionsController> logger;
+
+        public ProjectionsController(ILogger<ProjectionsController> logger)
+        {
+            this.logger = logger;
+        }
+
         [HttpGet]
         public List<Product> GetProductList() => Products.ProductList;
         [HttpGet]
@@ -24,10 +31,10 @@ namespace linq_web_api.Controllers
             var numsPlusOne = from n in numbers
                               select n + 1;
 
-            Console.WriteLine("Numbers + 1:");
+            logger.LogInformation("Numbers + 1:");
             foreach (var i in numsPlusOne)
             {
-                Console.WriteLine(i);
+                logger.LogInformation(i.ToString());
             }
             return 0;
             #endregion
@@ -41,10 +48,10 @@ namespace linq_web_api.Controllers
             var productNames = from p in products
                                select p.ProductName;
 
-            Console.WriteLine("Product Names:");
+            logger.LogInformation("Product Names:");
             foreach (var productName in productNames)
             {
-                Console.WriteLine(productName);
+                logger.LogInformation(productName);
             }
             #endregion
             return 0;
@@ -59,10 +66,10 @@ namespace linq_web_api.Controllers
             var textNums = from n in numbers
                            select strings[n];
 
-            Console.WriteLine("Number strings:");
+            logger.LogInformation("Number strings:");
             foreach (var s in textNums)
             {
-                Console.WriteLine(s);
+                logger.LogInformation(s);
             }
             #endregion
             return 0;
@@ -78,7 +85,7 @@ namespace linq_web_api.Controllers
 
             foreach (var ul in upperLowerWords)
             {
-                Console.WriteLine($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}");
+                logger.LogInformation($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}");
             }
             #endregion
             return 0;
@@ -94,7 +101,7 @@ namespace linq_web_api.Controllers
 
             foreach (var ul in upperLowerWords)
             {
-                Console.WriteLine($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}");
+                logger.LogInformation($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}");
             }
             #endregion
             return 0;
@@ -111,7 +118,7 @@ namespace linq_web_api.Controllers
 
             foreach (var d in digitOddEvens)
             {
-                Console.WriteLine($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}.");
+                logger.LogInformation($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}.");
             }
             #endregion
             return 0;
@@ -128,7 +135,7 @@ namespace linq_web_api.Controllers
 
             foreach (var d in digitOddEvens)
             {
-                Console.WriteLine($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}.");
+                logger.LogInformation($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}.");
             }
             #endregion
             return 0;
@@ -142,10 +149,10 @@ namespace linq_web_api.Controllers
             var productInfos = from p in products
                                select (p.ProductName, p.Category, Price: p.UnitPrice);
 
-            Console.WriteLine("Product Info:");
+            logger.LogInformation("Product Info:");
             foreach (var productInfo in productInfos)
             {
-                Console.WriteLine($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit.");
+                logger.LogInformation($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit.");
             }
             #endregion
             return 0;
@@ -158,10 +165,10 @@ namespace linq_web_api.Controllers
 
             var numsInPlace = numbers.Select((num, index) => (Num: num, InPlace: num == index));
 
-            Console.WriteLine("Number: In-place?");
+            logger.LogInformation("Number: In-place?");
             foreach (var n in numsInPlace)
             {
-                Console.WriteLine($"{n.Num}: {n.InPlace}");
+                logger.LogInformation($"{n.Num}: {n.InPlace}");
             }
             #endregion
             return 0;
@@ -177,10 +184,10 @@ namespace linq_web_api.Controllers
                           where n < 5
                           select digits[n];
 
-            Console.WriteLine("Numbers < 5:");
+            logger.LogInformation("Numbers < 5:");
             foreach (var num in lowNums)
             {
-                Console.WriteLine(num);
+                logger.LogInformation(num);
             }
             #endregion
             return 0;
@@ -197,10 +204,10 @@ namespace linq_web_api.Controllers
                         where a < b
                         select (a, b);
 
-            Console.WriteLine("Pairs where a < b:");
+            logger.LogInformation("Pairs where a < b:");
             foreach (var pair in pairs)
             {
-                Console.WriteLine($"{pair.a} is less than {pair.b}");
+                logger.LogInformation($"{pair.a} is less than {pair.b}");
             }
             #endregion
             return 0;
@@ -218,7 +225,7 @@ namespace linq_web_api.Controllers
 
             foreach (var order in orders)
             {
-                Console.WriteLine($"Customer: {order.CustomerID}, Order: {order.OrderID}, Total value: {order.Total}");
+                logger.LogInformation($"Customer: {order.CustomerID}, Order: {order.OrderID}, Total value: {order.Total}");
             }
             #endregion
             return 1;
@@ -236,7 +243,7 @@ namespace linq_web_api.Controllers
 
             foreach (var order in orders)
             {
-                Console.WriteLine($"Customer: {order.CustomerID}, Order: {order.OrderID}, Total date: {order.OrderDate.ToShortDateString()}");
+                logger.LogInformation($"Customer: {order.CustomerID}, Order: {order.OrderID}, Total date: {order.OrderDate.ToShortDateString()}");
             }
             #endregion
             return 0;
@@ -254,7 +261,7 @@ namespace linq_web_api.Controllers
 
             foreach (var order in orders)
             {
-                Console.WriteLine($"Customer: {order.CustomerID}, Order: {order.OrderID}, Total value: {order.Total}");
+                logger.LogInformation($"Customer: {order.CustomerID}, Order: {order.OrderID}, Total value: {order.Total}");
             }
             #endregion
             return 0;
@@ -275,7 +282,7 @@ namespace linq_web_api.Controllers
 
             foreach (var order in orders)
             {
-                Console.WriteLine($"Customer: {order.CustomerID}, Order: {order.OrderID}");
+                logger.LogInformation($"Customer: {order.CustomerID}, Order: {order.OrderID}");
             }
             #endregion
             return 0;
@@ -294,7 +301,7 @@ namespace linq_web_api.Controllers
 
             foreach (var order in customerOrders)
             {
-                Console.WriteLine(order);
+                logger.LogInformation(order);
             }
             #endregion
             return 0;
